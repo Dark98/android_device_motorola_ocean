@@ -7,20 +7,15 @@ load_panel_modules()
     panel_supplier=$(cat /sys/devices/virtual/graphics/fb0/panel_supplier 2> /dev/null)
 
     case $panel_supplier in
-        boe | tianmah)
-            insmod $path/himax_mmi.ko
-            ;;
-        tianman)
+        csot)
             insmod $path/nova_mmi.ko
             ;;
-        tianma)
-            insmod $path/synaptics_tcm_i2c.ko
-            insmod $path/synaptics_tcm_core.ko
-            insmod $path/synaptics_tcm_touch.ko
-            insmod $path/synaptics_tcm_device.ko
-            insmod $path/synaptics_tcm_reflash.ko
-            insmod $path/synaptics_tcm_testing.ko
-            ;;
+	ofilm)
+	    insmod $path/focaltech_mmi.ko
+	    ;;
+	tianma)
+	    insmod $path/ilitek_mmi.ko
+	    ;;
         *)
             echo "$panel_supplier not supported"
             ;;
@@ -40,11 +35,10 @@ insmod /vendor/lib/modules/mmi_info.ko
 insmod /vendor/lib/modules/tzlog_dump.ko
 insmod /vendor/lib/modules/mmi_sys_temp.ko
 
-# River specific
+# Ocean specific?
 insmod /vendor/lib/modules/tps61280.ko
 insmod /vendor/lib/modules/drv2624_mmi.ko
-insmod /vendor/lib/modules/aw869x.ko
-insmod /vendor/lib/modules/sx933x_sar.ko
+insmod /vendor/lib/modules/sx932x_sar.ko
 
 # Load panel modules
 if [ -d /vendor/lib/modules ]; then
@@ -57,3 +51,4 @@ fi
 
 umount /vendor
 setprop drivers.loaded 1
+
